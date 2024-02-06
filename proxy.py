@@ -85,6 +85,8 @@ def proxy(proxy_address: tuple[str, int], server_adress: tuple[str, int]) -> Non
 
         # Prepare the proxy socket
         # * Fill in start (1)
+        proxy_socket.bind((proxy_host,proxy_port))
+        proxy_socket.listen(1)
         # * Fill in end (1)
 
         threads = []
@@ -93,8 +95,9 @@ def proxy(proxy_address: tuple[str, int], server_adress: tuple[str, int]) -> Non
         while True:
             try:
                 # Establish connection with client.
-                
-                client_socket, client_address = # * Fill in start (2) # * Fill in end (2)
+                # * Fill in start (2) #
+                client_socket, client_address =proxy_socket.accept()
+                # * Fill in end (2)
 
                 # Create a new thread to handle the client request
                 thread = threading.Thread(target=client_handler, args=(
@@ -119,7 +122,7 @@ def client_handler(client_socket: socket.socket, client_address: tuple[str, int]
         while True:
             # Receive data from the client
             
-            data = # * Fill in start (3) # * Fill in end (3)
+            data = client_socket.recv(8180)# * Fill in start (3) # * Fill in end (3)
             
             if not data:
                 break
@@ -154,6 +157,7 @@ def client_handler(client_socket: socket.socket, client_address: tuple[str, int]
 
                 # Send the response back to the client
                 # * Fill in start (4)
+                client_socket.send(response)
                 # * Fill in end (4)
                 
             except Exception as e:
