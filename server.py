@@ -89,7 +89,9 @@ def server(host: str, port: int) -> None:
 
         # Prepare the server socket
         # * Fill in start (1)
+
         server_socket.bind((host, port))
+        server_socket.listen(1)
         # * Fill in end (1)
 
         threads = []
